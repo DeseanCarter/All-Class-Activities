@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>The Magical Cat Button</title>
+</head>
+
+<body>
+  <button id="cat-button">magical cat button</button>
+  <div id="images">
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    //Click Function for when the button is clicked - Event Listener
+    $("#cat-button").on("click", function() {
+
+      //Storing API key to access images
+      var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats&rating=pg";
+
+      //AJAX Event that pulls gifs - GET request
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+
+      //Runs function - AJAX request comes back
+        .then(function(response) {
+
+        //Looks through window object to choose image url property
+          var imageUrl = response.data.image_original_url;
+
+          //Creates image element
+          var catImage = $("<img>");
+
+          //Sets attribute to imageURL
+          catImage.attr("src", imageUrl);
+          catImage.attr("alt", "cat image");
+
+          //Posts the images
+          $("#images").prepend(catImage);
+        });
+    });
+  </script>
+</body>
+
+</html>
